@@ -1,16 +1,12 @@
 #!/bin/bash
 
+# Exit if anything fails
+set -e
+
 # Save current environment packages
 pip freeze > requirements.txt
 
-# Start Tailwind (in background)
-echo "🚀 Starting Tailwind..."
-python manage.py tailwind start &
-TAILWIND_PID=$!
-
-# Wait a bit to ensure Tailwind starts (optional, adjust as needed)
-# sleep 5
-
+# Commit and push changes
 git add .
 git commit -m "Deploy to prakashthapa617.com.np"
 git push origin main
@@ -24,11 +20,12 @@ set -e
 echo "🚀 Starting deployment on remote server..."
 
 # Activate virtual environment and change to project directory
-source /home3/prakash2/virtualenv/public_html/prakashthapa617.com.np/3.11/bin/activate
-cd /home3/prakash2/public_html/prakashthapa617.com.np
+source /home3/prakash2/virtualenv/meguro.com.np/3.11/bin/activate && cd /home3/prakash2/meguro.com.np
+
+# Pull latest code
+git pull origin main
 
 # Install/update Python dependencies only if requirements.txt changed
-git pull origin main
 if [ requirements.txt -nt .requirements_installed ]; then
     echo "📦 Installing/updating requirements..."
     pip install -r requirements.txt
@@ -55,9 +52,5 @@ echo "✅ Deployment completed successfully."
 deactivate
 exit
 EOF
-
-# Stop Tailwind after deploy
-echo "🚫 Stopping Tailwind..."
-kill $TAILWIND_PID 2>/dev/null || true
 
 echo "🔚 SSH session closed."
