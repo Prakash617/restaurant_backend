@@ -53,6 +53,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://meguro.com.np",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 # JWT config
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
@@ -65,6 +67,7 @@ SIMPLE_JWT = {
     'AUTH_COOKIE_HTTP_ONLY': True,
     'AUTH_COOKIE_PATH': '/',
     'AUTH_COOKIE_SAMESITE': 'Lax',  # or 'Strict'
+    
 }
 
 
