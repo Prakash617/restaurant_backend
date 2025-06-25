@@ -64,16 +64,17 @@ SIMPLE_JWT = {
     'AUTH_COOKIE': 'access_token',             # cookie name for access token
     'AUTH_COOKIE_REFRESH': 'refresh_token',    # cookie name for refresh token
 
-    'AUTH_COOKIE_SECURE': True,                 # Must be True for SameSite=None
-    'AUTH_COOKIE_HTTP_ONLY': True,              # Good for security (JS can't access)
+    'AUTH_COOKIE_SECURE': True,                 # Must be True for SameSite=None on HTTPS
+    'AUTH_COOKIE_HTTP_ONLY': True,              # Prevent JS access (security)
     'AUTH_COOKIE_PATH': '/',
-    'AUTH_COOKIE_SAMESITE': 'None',             # Important for cross-site cookies
+    'AUTH_COOKIE_SAMESITE': 'None',             # Required for cross-site cookies
 
     'AUTH_COOKIE_REFRESH_SECURE': True,         # Same for refresh token cookie
     'AUTH_COOKIE_REFRESH_HTTP_ONLY': True,
     'AUTH_COOKIE_REFRESH_PATH': '/',
     'AUTH_COOKIE_REFRESH_SAMESITE': 'None',
 }
+
 
 
 
