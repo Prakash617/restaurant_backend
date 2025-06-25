@@ -13,6 +13,7 @@ router.register('orders', OrderViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('auth/user/', current_user_view, name='current_user'),
     path('auth/login/', CookieTokenObtainPairView.as_view(), name='cookie_token_obtain_pair'),
     path('auth/logout/', logout_view),
 
