@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-q#n%^#-)iu!u9qzi3$e)og=zvxc4rh9p%-=l*oh3u1k&6&clkk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*',"http://meguro.com.np",]
 
 
 # Application definition
@@ -50,6 +50,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
+    "http://meguro.com.np",
 ]
 
 # JWT config
