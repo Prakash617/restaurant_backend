@@ -3,7 +3,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import CategoryViewSet, MenuItemViewSet, TableViewSet, OrderViewSet
-from .views import CookieTokenObtainPairView,logout_view
+from .views import CookieTokenObtainPairView,logout_view,current_user_view
 
 router = DefaultRouter()
 router.register('categories', CategoryViewSet)
