@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+*.manifest
+*.spec
+
+# Django specific
+db.sqlite3
+*.log
+*.pot
+*.pyc
+local_settings.py
+.env
+.env.*
+instance/
+*.sqlite3
+
+# Media and static files
+/media
+/staticfiles
+/static/
+*.webm
+*.mp4
+*.jpg
+*.png
+*.jpeg
+*.gif
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDEs
+.idea/
+*.sublime*
+*.swp
+
+# Coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+*.cover
+*.py,cover
+
+# pytest
+.cache
+.pytest_cache/
+
+# Virtual env
+venv/
+env/
+ENV/
+.venv/

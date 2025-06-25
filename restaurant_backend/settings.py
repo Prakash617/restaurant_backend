@@ -1,23 +1,14 @@
 from pathlib import Path
 from datetime import timedelta
 import os
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-q#n%^#-)iu!u9qzi3$e)og=zvxc4rh9p%-=l*oh3u1k&6&clkk'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*',"meguro.com.np",]
-
-
-# Application definition
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,13 +17,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'rest_framework',
+    'rest_framework',
     'corsheaders',
     'api',
 ]
 
 MIDDLEWARE = [
-        'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Must be before CommonMiddleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -42,46 +33,46 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-# CORS
+# CORS settings
 CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # your frontend URL
+    "http://localhost:3000",  # Frontend URL
+    # "http://meguro.com.np",
 ]
+
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
-    "http://meguro.com.np",
+    # "http://meguro.com.np",
 ]
 
-CORS_ALLOW_CREDENTIALS = True
-
+# JWT settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
 
-    'AUTH_COOKIE': 'access_token',             # cookie name for access token
-    'AUTH_COOKIE_REFRESH': 'refresh_token',    # cookie name for refresh token
+    'AUTH_COOKIE': 'access_token',
+    'AUTH_COOKIE_REFRESH': 'refresh_token',
 
-    'AUTH_COOKIE_SECURE': True,                 # Must be True for SameSite=None on HTTPS
-    'AUTH_COOKIE_HTTP_ONLY': True,              # Prevent JS access (security)
+    'AUTH_COOKIE_SECURE': False,          # False for local dev (HTTP)
+    'AUTH_COOKIE_SAMESITE': 'Lax',        # Lax recommended for local dev
+    'AUTH_COOKIE_HTTP_ONLY': True,
     'AUTH_COOKIE_PATH': '/',
-    'AUTH_COOKIE_SAMESITE': 'None',             # Required for cross-site cookies
 
-    'AUTH_COOKIE_REFRESH_SECURE': True,         # Same for refresh token cookie
+    'AUTH_COOKIE_REFRESH_SECURE': False,
+    'AUTH_COOKIE_REFRESH_SAMESITE': 'Lax',
     'AUTH_COOKIE_REFRESH_HTTP_ONLY': True,
     'AUTH_COOKIE_REFRESH_PATH': '/',
-    'AUTH_COOKIE_REFRESH_SAMESITE': 'None',
+
 }
 
-
-
-
-# REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'api.authentication.CookieJWTAuthentication',  # 👈 your custom class
+
     ),
 }
 
@@ -105,10 +96,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'restaurant_backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -116,56 +103,24 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
-# URL to use when referring to static files (e.g. in templates)
 STATIC_URL = '/static/'
 
-# The absolute path to the directory where collectstatic will collect static files for production use
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Additional locations to look for static files (optional)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

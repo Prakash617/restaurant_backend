@@ -43,7 +43,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
 from django.conf import settings
-
 class CookieTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
@@ -58,14 +57,16 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                 secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
                 samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'],
                 path=settings.SIMPLE_JWT['AUTH_COOKIE_PATH'],
+                # domain=settings.SIMPLE_JWT.get('AUTH_COOKIE_DOMAIN'), # optional
             )
             response.set_cookie(
                 key=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
                 value=refresh,
                 httponly=True,
-                secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'],
-                path=settings.SIMPLE_JWT['AUTH_COOKIE_PATH'],
+                secure=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH_SECURE'],
+                samesite=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH_SAMESITE'],
+                path=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH_PATH'],
+                # domain=settings.SIMPLE_JWT.get('AUTH_COOKIE_REFRESH_DOMAIN'), # optional
             )
             response.data = {'message': 'Login successful'}
         return response
