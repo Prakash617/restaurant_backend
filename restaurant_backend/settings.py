@@ -55,20 +55,26 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-# JWT config
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
-    'AUTH_COOKIE': 'access_token',  # custom name
-    'AUTH_COOKIE_REFRESH': 'refresh_token',
-    'AUTH_COOKIE_SECURE': False,  # True in production with HTTPS
-    'AUTH_COOKIE_HTTP_ONLY': True,
+
+    'AUTH_COOKIE': 'access_token',             # cookie name for access token
+    'AUTH_COOKIE_REFRESH': 'refresh_token',    # cookie name for refresh token
+
+    'AUTH_COOKIE_SECURE': True,                 # Must be True for SameSite=None
+    'AUTH_COOKIE_HTTP_ONLY': True,              # Good for security (JS can't access)
     'AUTH_COOKIE_PATH': '/',
-    'AUTH_COOKIE_SAMESITE': 'Lax',  # or 'Strict'
-    
+    'AUTH_COOKIE_SAMESITE': 'None',             # Important for cross-site cookies
+
+    'AUTH_COOKIE_REFRESH_SECURE': True,         # Same for refresh token cookie
+    'AUTH_COOKIE_REFRESH_HTTP_ONLY': True,
+    'AUTH_COOKIE_REFRESH_PATH': '/',
+    'AUTH_COOKIE_REFRESH_SAMESITE': 'None',
 }
+
 
 
 # REST Framework settings
